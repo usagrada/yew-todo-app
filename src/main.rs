@@ -1,3 +1,11 @@
+// mod components;
+mod layout;
+mod pages;
+mod app;
+mod provider;
+use app::App;
+
 fn main() {
-    println!("Hello, world!");
+  yew::start_app::<App>();
+  wasm_logger::init(wasm_logger::Config::default());
 }

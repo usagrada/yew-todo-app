@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.museum {
+  &__container {
+    margin: 0 20%;
+  }
+  &__table {
+    width: 600px;
+    height: 600px;
+    border: 1px solid black;
+
+    tr {
+      text-align: center;
+      td {
+        border: 1px solid black;
+      }
+    }
+  }
+}
