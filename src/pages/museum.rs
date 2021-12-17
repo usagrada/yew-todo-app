@@ -26,6 +26,8 @@ pub enum MuseumProviderMessage {
   Msg,
 }
 
+type MyClick = yew::Callback<yew::MouseEvent>;
+
 impl Component for MuseumProvider {
   type Message = MuseumProviderMessage;
   type Properties = Props;
@@ -64,18 +66,17 @@ impl Component for MuseumProvider {
   }
 
   fn view(&self, ctx: &Context<Self>) -> Html {
-    let onclick: yew::Callback<yew::MouseEvent> =
-      ctx.link().callback(|_| MuseumProviderMessage::Msg);
+    let onclick: MyClick = ctx.link().callback(|_| MuseumProviderMessage::Msg);
 
     html! {
-      <ContextProvider<yew::Callback<yew::MouseEvent>> context={&onclick}>
+      <ContextProvider<MyClick> context={&onclick}>
         <ContextProvider<Field> context={self.field.clone()}>
             <div>{self.field.height}</div>
             <div>{self.field.width}</div>
             <div>{format!("state: {}",self.field.state[1][2])}</div>
             { ctx.props().children.clone()}
         </ContextProvider<Field>>
-      </ContextProvider<yew::Callback<yew::MouseEvent>>>
+      </ContextProvider<MyClick>>
     }
   }
 }
@@ -93,7 +94,7 @@ impl Component for MuseumPage {
   fn view(&self, _ctx: &Context<Self>) -> Html {
     let width = 3;
     let height = 3;
-    log::info!("render");
+    
     html! {
       <div class={classes!("museum__container")}>
       <MuseumProvider width={width} height={height}>
@@ -127,24 +128,26 @@ impl Component for FieldView {
   }
 
   fn view(&self, ctx: &Context<Self>) -> Html {
+    let (click, _) = ctx
+      .link()
+      .context::<MyClick>(Callback::noop())
+      .expect("field to be set");
     let (field, _) = ctx
       .link()
       .context::<Field>(Callback::noop())
+      // .context::<Field>(update)
       .expect("field to be set");
-    let field = field.clone();
-    let (click, _) = ctx
-      .link()
-      .context::<yew::Callback<yew::MouseEvent>>(Callback::noop())
-      .expect("field to be set");
-
+    
     let table = (0..field.height)
       .into_iter()
       .map(|i| {
         let rows = (0..field.width)
           .into_iter()
           .map(|j| {
+            let update = ctx.link().callback(|_| MuseumProviderMessage::Msg);
             html! {
               <td
+                onclick={update}
                 onclick={&click}
               >
                 {field.state[i][j]}
@@ -168,7 +171,7 @@ impl Component for FieldView {
 #[function_component(FieldViewFunc)]
 pub fn field() -> Html {
   let field = use_context::<Field>().expect("no ctx found");
-  let click = use_context::<yew::Callback<yew::MouseEvent>>().expect("no ctx found");
+  let click = use_context::<MyClick>().expect("no ctx found");
 
   let table = (0..field.height)
     .into_iter()

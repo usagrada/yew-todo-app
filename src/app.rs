@@ -58,12 +58,12 @@ pub enum Route {
 
 fn switch(routes: &Route) -> Html {
   match routes {
-    Route::Home => {
-      html! {<div>{"Home"}</div>}
-    }
-    Route::About => {
-      html! {<div>{"About"}</div>}
-    }
+    // Route::Home => {
+    //   html! {<div>{"Home"}</div>}
+    // }
+    // Route::About => {
+    //   html! {<div>{"About"}</div>}
+    // }
     _ => {
       // html! {<div>{"404 Not Found"}</div>}
       html! {<crate::pages::museum::MuseumPage />}
