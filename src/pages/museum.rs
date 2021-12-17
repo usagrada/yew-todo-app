@@ -94,7 +94,6 @@ impl Component for MuseumPage {
   fn view(&self, _ctx: &Context<Self>) -> Html {
     let width = 3;
     let height = 3;
-    
     html! {
       <div class={classes!("museum__container")}>
       <MuseumProvider width={width} height={height}>
@@ -132,23 +131,23 @@ impl Component for FieldView {
       .link()
       .context::<MyClick>(Callback::noop())
       .expect("field to be set");
+    
+    let update = ctx.link().callback(|_| MuseumProviderMessage::Msg);
     let (field, _) = ctx
       .link()
       .context::<Field>(Callback::noop())
       // .context::<Field>(update)
       .expect("field to be set");
-    
     let table = (0..field.height)
       .into_iter()
       .map(|i| {
         let rows = (0..field.width)
           .into_iter()
           .map(|j| {
-            let update = ctx.link().callback(|_| MuseumProviderMessage::Msg);
             html! {
               <td
-                onclick={update}
                 onclick={&click}
+                onclick={&update}
               >
                 {field.state[i][j]}
               </td>
