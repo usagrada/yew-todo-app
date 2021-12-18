@@ -1,5 +1,5 @@
 use crate::provider::theme::*;
-use yew::prelude::{html, Callback, Component, Context, Html};
+use yew::prelude::{html, Component, Context, Html};
 use yew_router::prelude::{BrowserRouter, Routable, Switch};
 
 pub struct App;
@@ -16,31 +16,9 @@ impl Component for App {
     html! {
     <BrowserRouter>
       <ThemeProvider>
-        <Hello />
         <Switch<Route> render={Switch::render(switch)} />
       </ThemeProvider>
     </BrowserRouter>
-    }
-  }
-}
-
-struct Hello;
-
-impl Component for Hello {
-  type Message = ();
-  type Properties = ();
-
-  fn create(_ctx: &Context<Self>) -> Self {
-    Self
-  }
-
-  fn view(&self, ctx: &Context<Self>) -> Html {
-    let (theme, _) = ctx
-      .link()
-      .context::<Theme>(Callback::noop())
-      .expect("theme to be set");
-    html! {
-      <div>{theme.foreground} </div>
     }
   }
 }
@@ -66,7 +44,8 @@ fn switch(routes: &Route) -> Html {
     // }
     _ => {
       // html! {<div>{"404 Not Found"}</div>}
-      html! {<crate::pages::museum::MuseumPage />}
+      // html! {<crate::pages::museum::MuseumPage />}
+      html! {<crate::pages::issue::Page />}
     }
   }
 }
