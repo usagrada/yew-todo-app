@@ -1,7 +1,7 @@
 // mod components;
+mod app;
 mod layout;
 mod pages;
-mod app;
 mod provider;
 use app::App;
 
