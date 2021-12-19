@@ -94,7 +94,7 @@ impl Component for MuseumPage {
   fn view(&self, _ctx: &Context<Self>) -> Html {
     let width = 3;
     let height = 3;
-    
+
     html! {
       <div class={classes!("museum__container")}>
       <MuseumProvider width={width} height={height}>
@@ -137,7 +137,7 @@ impl Component for FieldView {
       .context::<Field>(Callback::noop())
       // .context::<Field>(update)
       .expect("field to be set");
-    
+
     let table = (0..field.height)
       .into_iter()
       .map(|i| {

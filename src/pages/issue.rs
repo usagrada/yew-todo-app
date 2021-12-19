@@ -13,7 +13,6 @@ pub struct Props {
   pub children: Children,
 }
 
-
 pub enum ProviderMessage {
   Msg,
 }
@@ -25,9 +24,7 @@ impl Component for Provider {
   type Properties = Props;
 
   fn create(_ctx: &Context<Self>) -> Self {
-    Self {
-      value: 0
-    }
+    Self { value: 0 }
   }
 
   fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
@@ -45,7 +42,7 @@ impl Component for Provider {
 
     html! {
       <ContextProvider<MyClick> context={&onclick}>
-        <ContextProvider<usize> context={self.value.clone()}>
+        <ContextProvider<usize> context={self.value}>
             { ctx.props().children.clone()}
         </ContextProvider<usize>>
       </ContextProvider<MyClick>>
@@ -76,7 +73,6 @@ impl Component for Page {
     }
   }
 }
-
 
 pub struct View;
 
@@ -113,7 +109,6 @@ pub fn view() -> Html {
   let value = use_context::<usize>().expect("no ctx found");
   let click = use_context::<MyClick>().expect("no ctx found");
 
-  
   html! {
     <div onclick={click}>
       {value}
@@ -121,4 +116,3 @@ pub fn view() -> Html {
     </div>
   }
 }
-

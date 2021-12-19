@@ -13,7 +13,7 @@ pub struct Props {
 
 #[derive(Clone)]
 pub struct ThemeProvider {
-  theme: Theme
+  theme: Theme,
 }
 
 impl Component for ThemeProvider {
@@ -25,15 +25,15 @@ impl Component for ThemeProvider {
       theme: Theme {
         foreground: "yellow".to_owned(),
         background: "pink".to_owned(),
-      }
+      },
     }
   }
 
   fn view(&self, ctx: &Context<Self>) -> Html {
     html! {
-        <ContextProvider<Theme> context={self.theme.clone()}>
-          { ctx.props().children.clone()}
-        </ContextProvider<Theme>>
+      <ContextProvider<Theme> context={self.theme.clone()}>
+      { ctx.props().children.clone()}
+      </ContextProvider<Theme>>
     }
   }
 }
